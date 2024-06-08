@@ -35,52 +35,38 @@
 
     {{-- FIRST ROW OF BUTTONS --}}
     <div class="">
-        {{-- NUMBER OF APPOINTMENTS --}}
-        <div class="box">
-            <div class="text">
-                <p class="">Scheduled for today</p>
-                <p class="">(NUMBER)</p>
-                <p class="">Patients</p>
-            </div>
-        </div>
-        {{-- APPOINTMENTS --}}
+        {{-- INVENTORY ADD --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Appointments</p>
-                <p class="">Calendar | Schedule Visit</p>
+                <p class="">Add Patient</p>
             </div>
         </div>
         {{-- PATIENT'S RECORDS --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Patient's Records</p>
-                <p class="">Personal Information | Dental Treatment History</p>
+                <a href=" {{route('admin/inventory/add')}}">
+                <p class="">Add Item on Inventory</p>
+                </a>
             </div>
+        </div>
         </div>
     </div>
 
     {{-- SECOND ROW OF BUTTONS --}}
+    {{-- FIRST ROW OF BUTTONS --}}
     <div class="">
-        {{-- REPORTS --}}
+        {{-- INVENTORY ADD --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Reports</p>
-                <p class="">Generate Transaction Record</p>
+                <p class="">Edit Patient Information</p>
             </div>
         </div>
-        {{-- MAINTENANCE --}}
+        {{-- PATIENT'S RECORDS --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Maintenance</p>
-                <p class="">Add | Modify / Edit Information</p>
+                <p class="">Edit Item on Inventory</p>
             </div>
         </div>
-        {{-- INVENTORY --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Inventory</p>
-                <p class="">Dental Materials Stock</p>
-            </div>
         </div>
     </div>
     

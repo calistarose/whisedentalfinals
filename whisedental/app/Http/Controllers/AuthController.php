@@ -57,8 +57,19 @@ class AuthController extends Controller
             'medical_conditions' => 'nullable',
             'allergy' => 'nullable',
             'username' => 'required',
-            'password' => 'required|confirmed',
+            'password' => 'required',
         ])->validate();
+
+        //user table info
+        $user = User::create([
+            'last_name' => $request->last_name,
+            'first_name' => $request->first_name,
+            'contact_number' => $request->contact_number,
+            'email_address' => $request->email_address,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'type' => "0"
+        ]);
 
         //patient table info
         Patient::create([
@@ -92,19 +103,10 @@ class AuthController extends Controller
             'medical_conditions' => $request->medical_conditions,
             'allergy' => $request->allergy,
             'username' => $request->username,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'user_id' => $user->id
         ]);
 
-        //user table info
-        User::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'contact_number' => $request->contact_number,
-            'email_address' => $request->email_address,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'type' => "0"
-        ]);
 
         return redirect()->route('login');
     }

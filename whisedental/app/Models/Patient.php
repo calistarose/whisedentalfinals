@@ -40,6 +40,11 @@ class Patient extends Model
         'medical_conditions',
         'allergy' ,
         'username' ,
-        'password'
+        'password',
+        'user_id'
 ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

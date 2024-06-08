@@ -24,66 +24,28 @@
         <a href="#">About</a>
     </div>
 
-    {{-- LABEL --}}
-    <div class="marker">DASHBOARD</div>
+     {{-- LABEL --}}
+     <div class="marker">DASHBOARD</div>
 
     {{-- ADMIN --}}
     <div class="text">ADMIN</div>
     <a href="{{route('admin/profile')}}">
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
-
-    {{-- FIRST ROW OF BUTTONS --}}
-    <div class="">
-        {{-- NUMBER OF APPOINTMENTS --}}
-        <div class="box">
-            <div class="text">
-                <p class="">Scheduled for today</p>
-                <p class="">(NUMBER)</p>
-                <p class="">Patients</p>
-            </div>
-        </div>
-        {{-- APPOINTMENTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Appointments</p>
-                <p class="">Calendar | Schedule Visit</p>
-            </div>
-        </div>
-        {{-- PATIENT'S RECORDS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Patient's Records</p>
-                <p class="">Personal Information | Dental Treatment History</p>
-            </div>
-        </div>
-    </div>
-
-    {{-- SECOND ROW OF BUTTONS --}}
-    <div class="">
-        {{-- REPORTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Reports</p>
-                <p class="">Generate Transaction Record</p>
-            </div>
-        </div>
-        {{-- MAINTENANCE --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Maintenance</p>
-                <p class="">Add | Modify / Edit Information</p>
-            </div>
-        </div>
-        {{-- INVENTORY --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Inventory</p>
-                <p class="">Dental Materials Stock</p>
-            </div>
-        </div>
-    </div>
-    
+    <!-- INVENTORY TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Item No.</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Supplier</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Expiry Date</th>
+                <th scope="col">Date Restocked</th>
+            </tr>
+        </thead>
+    </table>
 
     {{-- SCRIPTS --}}
     <script>

@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\MaintenanceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +45,13 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 //Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin/home');
+
+    //Admin Profile
+    Route::get('/admin/profile', [AdminController::class,'profilepage'])->name('admin/profile');
+
+    Route::get('/admin/inventory', [InventoryController::class,'index'])->name('admin/inventory');
+    Route::get('/admin/inventory/add', [InventoryController::class,'create'])->name('admin/inventory/add');
+    Route::post('/admin/inventory/store', [InventoryController::class,'store'])->name('admin/inventory/store');
+
+    Route::get('/admin/maintenance', [MaintenanceController::class,'index'])->name('admin/maintenance');
 });

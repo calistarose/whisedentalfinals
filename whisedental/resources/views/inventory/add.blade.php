@@ -8,6 +8,7 @@
     <title>Whise Smile Dental Clinic </title>
 </head>
 <body>
+    <form action="{{ route('admin/inventory/store') }}" method="POST" enctype="multipart/form-data">
     {{-- HEADER --}}
     @include('partials.adminHeader')
 
@@ -24,66 +25,50 @@
         <a href="#">About</a>
     </div>
 
-    {{-- LABEL --}}
-    <div class="marker">DASHBOARD</div>
+     {{-- LABEL --}}
+     <div class="marker">DASHBOARD</div>
 
     {{-- ADMIN --}}
     <div class="text">ADMIN</div>
     <a href="{{route('admin/profile')}}">
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
-
-    {{-- FIRST ROW OF BUTTONS --}}
-    <div class="">
-        {{-- NUMBER OF APPOINTMENTS --}}
-        <div class="box">
-            <div class="text">
-                <p class="">Scheduled for today</p>
-                <p class="">(NUMBER)</p>
-                <p class="">Patients</p>
-            </div>
+    <!-- ADD INVENTORY  -->
+     
+        @csrf
+        <div>
+            <label>
+                Product Name
+            </label>
+            <input id="product_name" type="text">
         </div>
-        {{-- APPOINTMENTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Appointments</p>
-                <p class="">Calendar | Schedule Visit</p>
-            </div>
+        <div>
+            <label>
+                Brand
+            </label>
+            <input id="brand" type="text">
         </div>
-        {{-- PATIENT'S RECORDS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Patient's Records</p>
-                <p class="">Personal Information | Dental Treatment History</p>
-            </div>
+        <div>
+            <label>
+                Supplier
+            </label>
+            <input id="supplier" type="text">
         </div>
-    </div>
-
-    {{-- SECOND ROW OF BUTTONS --}}
-    <div class="">
-        {{-- REPORTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Reports</p>
-                <p class="">Generate Transaction Record</p>
-            </div>
+        <div>
+            <label>
+                Quantity
+            </label>
+            <input id="quantity" type="number">
         </div>
-        {{-- MAINTENANCE --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Maintenance</p>
-                <p class="">Add | Modify / Edit Information</p>
-            </div>
+        <div>
+            <label>
+                Expiry Date
+            </label>
+            <input id="date_expired" type="date">
         </div>
-        {{-- INVENTORY --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Inventory</p>
-                <p class="">Dental Materials Stock</p>
-            </div>
-        </div>
-    </div>
-    
+        <button type="submit">Add Inventory Item</button>
+     </form>
+   
 
     {{-- SCRIPTS --}}
     <script>

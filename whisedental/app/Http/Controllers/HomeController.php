@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Patient;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,14 @@ class HomeController extends Controller
     }
     //user home
     public function index(){
-        return view('home');
+        
+        $user = auth()->user();
+
+        // // Fetch the patient record associated with the authenticated user
+        $patients = $user->patients;
+        return view('home',compact('patients'));
+
+        //return view('home');
     }
 
     //admin home

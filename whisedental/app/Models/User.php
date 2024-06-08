@@ -20,9 +20,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'last_name',
+        'first_name',
+        'contact_number',
+        'email_address',
+        'username' ,
         'password',
+        //'type'
     ];
 
     /**
@@ -50,5 +54,9 @@ class User extends Authenticatable
         return new Attribute(
             get: fn ($value) =>  ["user", "admin"][$value],
         );
+    }
+
+    public function patients(){
+        return $this->hasOne(Patient::class);
     }
 }
