@@ -44,7 +44,7 @@
                 <th scope="col">Quantity</th>
                 <th scope="col">Expiry Date</th>
                 <th scope="col">Date Restocked</th>
-                <th scope="col">Edit</th>
+                <!-- <th scope="col">Edit</th> -->
             </tr>
         </thead>
         <tbody>
@@ -54,6 +54,9 @@
                 <th scope="row">
                     {{ $loop -> iteration }}
                 </th>
+                <td>
+                    {{$rs->inventory_id}}
+                </td>
                 <td>
                     {{$rs->product_name}}
                 </td>
@@ -72,9 +75,9 @@
                 <td>
                     {{$rs->date_restocked}}
                 </td>
-                <td>
-                <a href="{{ route('admin/inventory/edit', $rs->id)}}" class="text-green-800 pl-2">Edit</a>
-                </td>
+                <!-- <td>
+                <a href="" class="text-green-800 pl-2">Edit</a>
+                </td> -->
             </tr>
             @endforeach
             @else

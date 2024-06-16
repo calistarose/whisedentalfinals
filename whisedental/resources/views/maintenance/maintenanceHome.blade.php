@@ -68,15 +68,15 @@
             
         </div>
         
-        {{-- PATIENT'S RECORDS --}}
+        {{-- EDIT INVENTORY RECORDS --}}
         <div class="filled-box">
-        <!-- @foreach ($inventory as $rs) -->
+        @foreach ($inventory as $rs)
             <div class="text">
-            <!-- <a href="{{ route('admin/inventory/edit', $rs->id)}}"> -->
+            <a href="{{ route('admin/inventory/edit', $rs->id)}}">
                 <p class="">Edit Item on Inventory</p>
-                <!-- </a> -->
+                </a>
             </div>
-            <!-- @endforeach -->
+            @endforeach
         </div>
         </div>
     </div>

@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email_address',
         'username' ,
         'password',
+        'google2fa_secret'
         //'type'
     ];
 
@@ -56,7 +57,19 @@ class User extends Authenticatable
         );
     }
 
-    // public function patients(){
-    //     return $this->hasOne(Patient::class);
-    // }
+    public function patients(){
+        return $this->hasOne(Patient::class);
+    }
+
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return decrypt($value);
+    }
+
+    public function setGoogle2faSecretAttribute($value)
+    {
+        $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    
 }

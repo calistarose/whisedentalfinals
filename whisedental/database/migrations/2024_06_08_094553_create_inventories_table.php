@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
+            $table->string('inventory_id', 6)->unique();
             $table->string('product_name');
             $table->string('brand');
             $table->string('supplier');

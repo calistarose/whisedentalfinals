@@ -15,10 +15,10 @@
     <div id="sidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="{{ route ('admin/home')}}">Dashboard</a>
-        <a href="#">Appointments</a>
+        <a href="{{ route ('appointments.index')}}">Appointments</a>
         <a href="#">Patient's Record</a>
         <a href="#">Reports</a>
-        <a href="{{ route ('admin/maintenance')}}">Maintenance</a>
+        <a href="{{ route ('payments.home')}}">Maintenance</a>
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
         <a href="#">About</a>

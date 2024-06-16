@@ -44,7 +44,32 @@ class Patient extends Model
         'user_id'
 ];
 
-    // public function user(){
-    //     return $this->belongsTo(User::class);
-    // }
+protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            // Example of generating a formatted patient_id (e.g., P000000001)
+            $lastPatient = static::orderBy('created_at', 'desc')->first();
+
+            if ($lastPatient) {
+                $model->patient_id = 'P' . str_pad((int) substr($lastPatient->patient_id, 1) + 1, 9, '0', STR_PAD_LEFT);
+            } else {
+                $model->patient_id = 'P00001'; // Initial patient_id if table is empty
+            }
+        });
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function appointment(){
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

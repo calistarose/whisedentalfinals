@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('type')->default(false); //add type boolean Users: 0->User, 1->admin
             $table->timestamps();
+            // $table->string('google2fa_secret')->nullable()->after('password');
         });
 
         
