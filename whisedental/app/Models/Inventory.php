@@ -14,7 +14,7 @@ class Inventory extends Model
         'brand',
         'supplier',
         'quantity',
-        'date_expired',
-        
+        'date_expired',  
+        'date_restocked' 
     ];
 }

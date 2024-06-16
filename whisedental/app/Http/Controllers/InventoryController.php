@@ -13,7 +13,10 @@ class InventoryController extends Controller
     public function index()
     {
         //
-        return view('inventory.index');
+        $inventory = Inventory::orderBy('created_at','DESC')->get();
+
+        return view('inventory.index', compact('inventory'));
+        //return view('inventory.index');
     }
 
     /**
@@ -22,7 +25,7 @@ class InventoryController extends Controller
     public function create()
     {
         //
-        return view('inventory.add');
+        return view('inventory.create');
     }
 
     /**
@@ -39,10 +42,10 @@ class InventoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    // public function show(string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -50,6 +53,9 @@ class InventoryController extends Controller
     public function edit(string $id)
     {
         //
+        $inventory = Inventory::findOrFail($id);
+
+        return view('inventory.edit', compact('inventory'));
     }
 
     /**
@@ -58,13 +64,18 @@ class InventoryController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $inventory = Inventory::findOrFail($id);
+
+        $inventory->update($request->all());
+
+        return redirect()->route('admin/inventory')->with('success','product updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // public function destroy(string $id)
+    // {
+    //     //
+    // }
 }

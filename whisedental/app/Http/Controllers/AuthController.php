@@ -104,7 +104,7 @@ class AuthController extends Controller
             'allergy' => $request->allergy,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'user_id' => $user->id
+            'user_id'=>$user->id
         ]);
 
 

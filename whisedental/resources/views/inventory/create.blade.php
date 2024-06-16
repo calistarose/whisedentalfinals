@@ -8,6 +8,7 @@
     <title>Whise Smile Dental Clinic </title>
 </head>
 <body>
+    
     {{-- HEADER --}}
     @include('partials.adminHeader')
 
@@ -33,57 +34,48 @@
     <a href="{{route('admin/profile')}}">
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
-    <!-- INVENTORY TABLE -->
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Item No.</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Supplier</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Expiry Date</th>
-                <th scope="col">Date Restocked</th>
-                <th scope="col">Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($inventory->count()>0)
-            @foreach($inventory as $rs)
-            <tr>
-                <th scope="row">
-                    {{ $loop -> iteration }}
-                </th>
-                <td>
-                    {{$rs->product_name}}
-                </td>
-                <td>
-                    {{$rs->brand}}
-                </td>
-                <td>
-                    {{$rs->supplier}}
-                </td>
-                <td>
-                    {{$rs->quantity}}
-                </td>
-                <td>
-                    {{$rs->date_expired}}
-                </td>
-                <td>
-                    {{$rs->date_restocked}}
-                </td>
-                <td>
-                <a href="{{ route('admin/inventory/edit', $rs->id)}}" class="text-green-800 pl-2">Edit</a>
-                </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td>product not found</td>
-            </tr>
-            @endif
-        </tbody>
-    </table>
+    <!-- ADD INVENTORY  -->
+    <form action="{{ route('admin/inventory/store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div>
+            <label>
+                Product Name
+            </label>
+            <input id="product_name" name="product_name" type="text">
+        </div>
+        <div>
+            <label>
+                Brand
+            </label>
+            <input id="brand" name="brand" type="text">
+        </div>
+        <div>
+            <label>
+                Supplier
+            </label>
+            <input id="supplier" name="supplier" type="text">
+        </div>
+        <div>
+            <label>
+                Quantity
+            </label>
+            <input id="quantity" name="quantity" type="number">
+        </div>
+        <div>
+            <label>
+                Expiry Date
+            </label>
+            <input id="date_expired" name="date_expired" type="date">
+        </div>
+        <div>
+            <label>
+                Date Restocked
+            </label>
+            <input id="date_restocked" name="date_restocked" type="date">
+        </div>
+        <button type="submit">Add Inventory Item</button>
+     </form>
+   
 
     {{-- SCRIPTS --}}
     <script>

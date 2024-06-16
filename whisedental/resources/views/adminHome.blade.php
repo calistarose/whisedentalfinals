@@ -22,6 +22,7 @@
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
         <a href="#">About</a>
+        <a href="{{ route ('logout') }}">Logout</a>
     </div>
 
     {{-- LABEL --}}

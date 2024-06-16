@@ -50,8 +50,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/profile', [AdminController::class,'profilepage'])->name('admin/profile');
 
     Route::get('/admin/inventory', [InventoryController::class,'index'])->name('admin/inventory');
-    Route::get('/admin/inventory/add', [InventoryController::class,'create'])->name('admin/inventory/add');
+    Route::get('/admin/inventory/create', [InventoryController::class,'create'])->name('admin/inventory/create');
     Route::post('/admin/inventory/store', [InventoryController::class,'store'])->name('admin/inventory/store');
+    Route::get('/admin/inventory/edit/{id}', [InventoryController::class,'edit'])->name('admin/inventory/edit');
+    Route::put('/admin/inventory/edit/{id}', [InventoryController::class,'update'])->name('admin/inventory/update');
 
     Route::get('/admin/maintenance', [MaintenanceController::class,'index'])->name('admin/maintenance');
 });

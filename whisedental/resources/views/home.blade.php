@@ -7,14 +7,14 @@
 </head>
 <body>
 
-    <form method="POST">
+    
     <text>User Dashboard</text>
     <a href="{{ route('logout')}}">logout</a>
     <div>
-        <label>Date of Birth</label>
-        <input name="date_of_birth" type="date" value="{{$patients->date_of_birth}}">
+        <!-- <label>Date of Birth</label> -->
+        <!-- <input name="date_of_birth" type="date" > -->
     </div>
-    </form>
+   
 
     
 </body>

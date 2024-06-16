@@ -8,7 +8,7 @@
     <title>Whise Smile Dental Clinic </title>
 </head>
 <body>
-    <form action="{{ route('admin/inventory/store') }}" method="POST" enctype="multipart/form-data">
+    
     {{-- HEADER --}}
     @include('partials.adminHeader')
 
@@ -23,6 +23,7 @@
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
         <a href="#">About</a>
+        <a href="{{ route ('logout') }}">Logout</a>
     </div>
 
      {{-- LABEL --}}
@@ -34,39 +35,46 @@
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
     <!-- ADD INVENTORY  -->
-     
+    <form action="{{ route('admin/inventory/update', $inventory->id) }}" method="POST">
         @csrf
+        @method('PUT')
         <div>
             <label>
                 Product Name
             </label>
-            <input id="product_name" type="text">
+            <input id="product_name" name="product_name" type="text" value="{{$inventory->product_name}}">
         </div>
         <div>
             <label>
                 Brand
             </label>
-            <input id="brand" type="text">
+            <input id="brand" name="brand" type="text" value="{{$inventory->brand}}">
         </div>
         <div>
             <label>
                 Supplier
             </label>
-            <input id="supplier" type="text">
+            <input id="supplier" name="supplier" type="text" value="{{$inventory->supplier}}">
         </div>
         <div>
             <label>
                 Quantity
             </label>
-            <input id="quantity" type="number">
+            <input id="quantity" name="quantity" type="number" value="{{$inventory->quantity}}">
         </div>
         <div>
             <label>
                 Expiry Date
             </label>
-            <input id="date_expired" type="date">
+            <input id="date_expired" name="date_expired" type="date" value="{{$inventory->date_expired}}">
         </div>
-        <button type="submit">Add Inventory Item</button>
+        <div>
+            <label>
+                Date Restocked
+            </label>
+            <input id="date_restocked" name="date_restocked" type="date" value="{{$inventory->date_restocked}}">
+        </div>
+        <button type="submit">Update Inventory Item</button>
      </form>
    
 

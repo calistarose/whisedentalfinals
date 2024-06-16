@@ -22,6 +22,7 @@
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
         <a href="#">About</a>
+        <a href="{{ route ('logout') }}">Logout</a>
     </div>
 
     {{-- LABEL --}}
@@ -44,7 +45,7 @@
         {{-- PATIENT'S RECORDS --}}
         <div class="filled-box">
             <div class="text">
-                <a href=" {{route('admin/inventory/add')}}">
+                <a href=" {{route('admin/inventory/create')}}">
                 <p class="">Add Item on Inventory</p>
                 </a>
             </div>
@@ -56,16 +57,26 @@
     {{-- FIRST ROW OF BUTTONS --}}
     <div class="">
         {{-- INVENTORY ADD --}}
+        
         <div class="filled-box">
+       
             <div class="text">
+                
                 <p class="">Edit Patient Information</p>
+                </a>
             </div>
+            
         </div>
+        
         {{-- PATIENT'S RECORDS --}}
         <div class="filled-box">
+        <!-- @foreach ($inventory as $rs) -->
             <div class="text">
+            <!-- <a href="{{ route('admin/inventory/edit', $rs->id)}}"> -->
                 <p class="">Edit Item on Inventory</p>
+                <!-- </a> -->
             </div>
+            <!-- @endforeach -->
         </div>
         </div>
     </div>
