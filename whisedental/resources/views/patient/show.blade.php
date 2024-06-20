@@ -13,10 +13,16 @@
 
 {{-- SIDE NAVIGATION BAR --}}
 <div id="sidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">Help</a>
-    <a href="#">About</a>
-    <a href="{{ route ('logout') }}">Logout</a>
+<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{{ route ('admin/home') }}">Dashboard</a>
+        <a href="{{ route ('appointments.index')}}">Appointments</a>
+        <a href={{ route ('patient') }}>Patient's Record</a>
+        <a href="#">Reports</a>
+        <a href="{{ route ('payments/home')}}">Payments</a>
+        <a href="{{ route ('admin/inventory')}}">Inventory</a>
+        <a href="#">Help</a>
+        <a href="#">About</a>
+        <a href="{{ route ('logout') }}">Logout</a>
 </div>
 
     {{-- LABEL --}}
@@ -31,45 +37,39 @@
     <!-- NAME -->
     <div>
         <label>Patient Number: </label>
-        {{ $patients->patient_id }}
+        {{ $patient->patient_id }}
     </div>
 
      <!-- NAME -->
     <div>
-       {{ $patients->last_name.', '.$patients->first_name.' '.$patients->middle_name }}
+       {{ $patient->last_name.', '.$patient->first_name.' '.$patient->middle_name }}
     </div>
     <!-- DATE OF BIRTH -->
     <div>
         <label>Date of Birth: </label>
-        {{ $patients->date_of_birth }}
+        {{ $patient->date_of_birth }}
     </div>
     <!-- GENDER -->
     <div>
         <label>Gender: </label>
-        {{ $patients->gender }}
+        {{ $patient->gender }}
     </div>
     <!-- ADDRESS -->
     <div>
         <label>Address: </label>
-        {{ $patients->address }}
+        {{ $patient->address }}
     </div>
     <!-- CONTACT NUMBER -->
     <div>
         <label>Contact Number: </label>
-        {{ $patients->contact_number }}
+        {{ $patient->contact_number }}
     </div>
     <!-- EMAIL -->
     <div>
         <label>Email: </label>
-        {{ $patients->email_address }}
+        {{ $patient->email_address }}
     </div>
-
-    <div>
-        <a href = {{ route('appointments.create')}} >Add Appointment</a>
-    </div>
-    <h1>Your Transactions</h1>
-
-  
+    <h1>Transactions</h1>
         <table>
             <thead>
                 <tr>
@@ -82,7 +82,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($payments as $transaction)
+                @foreach ($payment as $transaction)
                     <tr>
                         <td>{{ $transaction->payment_id }}</td>
                         <td>{{ $transaction->type_of_appointment }}</td>

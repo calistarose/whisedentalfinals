@@ -18,7 +18,7 @@
         <a href="#">Appointments</a>
         <a href="#">Patient's Record</a>
         <a href="#">Reports</a>
-        <a href="{{ route ('admin/maintenance')}}">Maintenance</a>
+        <a href="{{ route ('payments/home')}}">Payments</a>
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
         <a href="#">About</a>
@@ -34,6 +34,7 @@
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
     <!-- INVENTORY TABLE -->
+    <button class="create-button" onclick="location.href='{{ route('admin/inventory/create') }}'">Add Inventory</button>
     <table>
         <thead>
             <tr>
@@ -44,6 +45,7 @@
                 <th scope="col">Quantity</th>
                 <th scope="col">Expiry Date</th>
                 <th scope="col">Date Restocked</th>
+                <th scope="col">Action</th>
                 <!-- <th scope="col">Edit</th> -->
             </tr>
         </thead>
@@ -51,9 +53,6 @@
             @if($inventory->count()>0)
             @foreach($inventory as $rs)
             <tr>
-                <th scope="row">
-                    {{ $loop -> iteration }}
-                </th>
                 <td>
                     {{$rs->inventory_id}}
                 </td>
@@ -75,9 +74,9 @@
                 <td>
                     {{$rs->date_restocked}}
                 </td>
-                <!-- <td>
-                <a href="" class="text-green-800 pl-2">Edit</a>
-                </td> -->
+                <td>
+                <a href="{{ route('admin/inventory/edit', $rs->id)}}" class="text-green-800 pl-2">Edit</a>
+                </td>
             </tr>
             @endforeach
             @else

@@ -24,8 +24,8 @@ class ReceiptEmail extends Mailable
         $this->payment = $payment;
 
         $this->receiptData = [
-            'payment_id' => $payment->id,
-            'patient_name' => $payment->patient->full_name, // Assuming 'full_name' is a method or attribute in the Patient model
+            'payment_id' => $payment->payment_id,
+            'patient_name' => $payment->patient->last_name, // Assuming 'full_name' is a method or attribute in the Patient model
             'appointment_type' => $payment->appointment_type,
             'debit' => $payment->debit,
             'credit' => $payment->credit,

@@ -13,6 +13,7 @@ class Patient extends Model
         'last_name',
         'first_name',
         'middle_name',
+        'suffix',
         'date_of_birth',
         'gender',
         'marital_status',
@@ -53,7 +54,7 @@ protected static function boot()
             $lastPatient = static::orderBy('created_at', 'desc')->first();
 
             if ($lastPatient) {
-                $model->patient_id = 'P' . str_pad((int) substr($lastPatient->patient_id, 1) + 1, 9, '0', STR_PAD_LEFT);
+                $model->patient_id = 'P' . str_pad((int) substr($lastPatient->patient_id, 1) + 1, 5, '0', STR_PAD_LEFT);
             } else {
                 $model->patient_id = 'P00001'; // Initial patient_id if table is empty
             }
@@ -65,7 +66,7 @@ protected static function boot()
     }
 
     public function appointment(){
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class, 'patient_id', 'id');
     }
 
     public function payments()

@@ -5,8 +5,6 @@
     <a href="#"> 
         <img src="{{ asset('images/LogoTranspa2Header.png')}}" alt="whise-logo" class="logo"> 
     </a>
-    {{-- SEARCH --}}
-    <div class=""> <input type="text" placeholder="Search"> </div>
     {{-- DATE AND TIME --}}
     <div class="">
         <div class="date"> <p class="" id="date"></p> </div>

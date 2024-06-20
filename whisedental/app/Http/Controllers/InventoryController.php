@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class InventoryController extends Controller
 {
@@ -13,7 +15,7 @@ class InventoryController extends Controller
     public function index()
     {
         //
-        $inventory = Inventory::orderBy('created_at','DESC')->get();
+        $inventory = Inventory::orderBy('created_at','ASC')->get();
 
         return view('inventory.index', compact('inventory'));
         //return view('inventory.index');
@@ -26,6 +28,7 @@ class InventoryController extends Controller
     {
         //
         return view('inventory.create');
+        
     }
 
     /**
@@ -34,8 +37,33 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         //
-        Inventory::create($request->all());
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'product_name' => 'required',
+                'brand' => 'required',
+                'supplier' => 'required',
+                'quantity' => 'required',
+                'date_expired' => 'required',  
+                'date_restocked' => 'required',
+            ],
+            [
+                'product_name.required' => 'Product name is required.',
+                'brand.required' => 'Brand is required.',
+                'supplier.required' => 'Supplier is required.',
+                'quantity.required' => 'Quantity is required.',
+                'date_expired.required' => 'Date expired is required.',
+                'date_restocked.required' => 'Date restocked is required.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('admin/inventory/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
  
+        Inventory::create($request->all());
         return redirect()->route('admin/inventory')->with('success', 'Product added successfully');
     }
 
@@ -65,6 +93,32 @@ class InventoryController extends Controller
     {
         //
         $inventory = Inventory::findOrFail($id);
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'product_name' => 'required',
+                'brand' => 'required',
+                'supplier' => 'required',
+                'quantity' => 'required',
+                'date_expired' => 'required',  
+                'date_restocked' => 'required',
+            ],
+            [
+                'product_name.required' => 'Product name is required.',
+                'brand.required' => 'Brand is required.',
+                'supplier.required' => 'Supplier is required.',
+                'quantity.required' => 'Quantity is required.',
+                'date_expired.required' => 'Date expired is required.',
+                'date_restocked.required' => 'Date restocked is required.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('admin/inventory/edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $inventory->update($request->all());
 

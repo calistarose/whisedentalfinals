@@ -8,6 +8,7 @@
         .hidden { display: none; }
     </style>
     
+    <!-- Link to your CSS file -->
     <link rel="stylesheet" href="{{ asset('css/styles.css')}}">
 </head>
 <body>
@@ -63,6 +64,7 @@
         <div>
             <label for="start-time">Start Time:</label>
             <select id="start-time" name="start_time" required>
+                <option value="">Select preferred time</option>
                 <!-- Time slots will be populated by JavaScript -->
             </select>
         </div>
@@ -101,7 +103,13 @@
                 if (date) {
                     const response = await fetch(`/appointments/available-times?date=${date}`);
                     const availableTimes = await response.json();
-                    startTimeSelect.innerHTML = '';
+                    startTimeSelect.innerHTML = ''; // Clear existing options
+                    // Add the "Select preferred time" option first
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select preferred time';
+                    startTimeSelect.appendChild(defaultOption);
+                    // Add available times
                     availableTimes.forEach(time => {
                         const option = document.createElement('option');
                         option.value = time; // Assuming time is like '08:00'
@@ -115,11 +123,15 @@
             startTimeSelect.addEventListener('change', function() {
                 const date = appointmentDateInput.value;
                 const time = this.value;
-                const startDateTime = new Date(`${date}T${time}:00`);
-                const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
-
-                startDateTimeInput.value = formatDateTime(startDateTime);
-                endDateTimeInput.value = formatDateTime(endDateTime);
+                if (time) {
+                    const startDateTime = new Date(`${date}T${time}:00`);
+                    const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
+                    startDateTimeInput.value = formatDateTime(startDateTime);
+                    endDateTimeInput.value = formatDateTime(endDateTime);
+                } else {
+                    startDateTimeInput.value = '';
+                    endDateTimeInput.value = '';
+                }
             });
 
             // Function to format datetime to YYYY-MM-DD HH:mm:ss

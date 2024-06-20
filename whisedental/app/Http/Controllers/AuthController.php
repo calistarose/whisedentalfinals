@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-Use App\Models\User;
+use App\Models\User;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,39 +30,136 @@ class AuthController extends Controller
     // Save registration
     public function registerSave(Request $request)
     {
-        Validator::make($request->all(), [
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'middle_name' => 'nullable',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required',
-            'marital_status' => 'required',
-            'home_address' => 'required',
-            'contact_number' => 'required',
-            'email_address' => 'required|email',
-            'last_dentist_visit' => 'required|date',
-            'had_cavities' => 'required',
-            'have_tooth_sensitivity' => 'required',
-            'grind_or_clench_teeth' => 'required',
-            'had_oral_surgeries' => 'required',
-            'had_braces_or_orthodontic_treatments' => 'required',
-            'have_gum_disease' => 'required',
-            'do_gums_bleed' => 'required',
-            'gum_recession_or_gum_grafting' => 'required',
-            'lost_teeth_due_to_decay_or_injury' => 'required',
-            'have_dental_implants' => 'required',
-            'have_crowns_bridges_or_dentures' => 'required',
-            'brush_teeth_at_least_twice_a_day' => 'required',
-            'floss_daily' => 'required',
-            'taking_medications' => 'required',
-            'consume_sugary_or_acidic_foods' => 'required',
-            'is_smoking' => 'required',
-            'drink_coffee_tea_or_red_wine' => 'required',
-            'medical_conditions' => 'nullable',
-            'allergy' => 'nullable',
-            'username' => 'required',
-            'password' => 'required',
-        ])->validate();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'last_name' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z ]+$/'],
+                'first_name' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z ]+$/'],
+                'middle_name' => ['nullable', 'string', 'max:255', 'regex:/^[A-Za-z ]+$/'],
+                'suffix' => ['nullable', 'string', 'max:255', 'regex:/^[A-Za-z ]+$/'],
+                'date_of_birth' => 'required|date',
+                'gender' => 'required|string',
+                'marital_status' => 'required|string|max:255',
+                'home_address' => 'required|string|max:255',
+                'contact_number' => ['required', 'string', 'max:11', 'regex:/^\d{11}$/'],
+                'email_address' => 'required|email|max:255|unique:users,email_address|',
+                'last_dentist_visit' => 'required|date',
+                'had_cavities' => 'required',
+                'have_tooth_sensitivity' => 'required',
+                'grind_or_clench_teeth' => 'required',
+                'had_oral_surgeries' => 'required',
+                'had_braces_or_orthodontic_treatments' => 'required',
+                'have_gum_disease' => 'required',
+                'do_gums_bleed' => 'required',
+                'gum_recession_or_gum_grafting' => 'required',
+                'lost_teeth_due_to_decay_or_injury' => 'required',
+                'have_dental_implants' => 'required',
+                'have_crowns_bridges_or_dentures' => 'required',
+                'brush_teeth_at_least_twice_a_day' => 'required',
+                'floss_daily' => 'required',
+                'taking_medications' => 'required',
+                'consume_sugary_or_acidic_foods' => 'required',
+                'is_smoking' => 'required',
+                'drink_coffee_tea_or_red_wine' => 'required',
+                'medical_conditions' => 'nullable|max:255',
+                'allergy' => 'nullable|max:255',
+                'username' => 'required|unique:users,username|alpha_dash|min:5|max:20',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'max:20',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#\$%\^&\*\(\)_\-+={}[\]|\\:;\'<>?,.\/])[A-Za-z\d@$!%*?&~!@#\$%\^&\*\(\)_\-+={}[\]|\\:;\'<>?,.\/]{8,20}$/',
+                ],
+                'verify_password' => 'required|same:password',
+                'agree_data_collection' => 'accepted',
+                'agree_user_policy' => 'accepted',
+            ],
+            [
+                'last_name.required' => 'Last name is required.',
+                'last_name.string' => 'Last name must be a string.',
+                'last_name.max' => 'Last name should not exceed :max characters.',
+                'last_name.regex' => 'Last name should only contain letters.',
+
+                'first_name.required' => 'First name is required.',
+                'first_name.string' => 'First name must be a string.',
+                'first_name.max' => 'First name should not exceed :max characters.',
+                'first_name.regex' => 'First name should only contain letters.',
+
+                'middle_name.string' => 'Middle name must be a string.',
+                'middle_name.max' => 'Middle name should not exceed :max characters.',
+                'middle_name.regex' => 'Middle name should only contain letters.',
+
+                'suffix.string' => 'Suffix must be a string.',
+                'suffix.max' => 'Suffix should not exceed :max characters.',
+                'suffix.regex' => 'Suffix should only contain letters.',
+
+                'date_of_birth.required' => 'Date of birth is required.',
+
+                'gender.required' => 'Gender is required.',
+
+                'marital_status.required' => 'Marital status is required.',
+
+                'home_address.required' => 'Home address is required.',
+
+                'contact_number.required' => 'Contact number is required.',
+                'contact_number.string' => 'Contact number must be a string.',
+                'contact_number.max' => 'Contact number should not exceed :max characters.',
+                'contact_number.regex' => 'Contact number should contain 11 digits.',
+
+                'email_address.required' => 'Email address is required.',
+                'email_address.email' => 'Please enter a valid email address.',
+                'email_address.max' => 'Email address should not exceed :max characters.',
+                'email_address.unique' => 'Email address is already in use.',
+
+                'last_dentist_visit.required' => 'Last dentist visit is required.',
+
+                'had_cavities.required' => 'This field is required.',
+                'have_tooth_sensitivity.required' => 'This field is required.',
+                'grind_or_clench_teeth.required' => 'This field is required.',
+                'had_oral_surgeries.required' => 'This field is required.',
+                'had_braces_or_orthodontic_treatments.required' => 'This field is required.',
+                'have_gum_disease.required' => 'This field is required.',
+                'do_gums_bleed.required' => 'This field is required.',
+                'gum_recession_or_gum_grafting.required' => 'This field is required.',
+                'lost_teeth_due_to_decay_or_injury.required' => 'This field is required.',
+                'have_dental_implants.required' => 'This field is required.',
+                'have_crowns_bridges_or_dentures.required' => 'This field is required.',
+                'brush_teeth_at_least_twice_a_day.required' => 'This field is required.',
+                'floss_daily.required' => 'This field is required.',
+                'taking_medications.required' => 'This field is required.',
+                'consume_sugary_or_acidic_foods.required' => 'This field is required.',
+                'is_smoking.required' => 'This field is required.',
+                'drink_coffee_tea_or_red_wine' => 'This field is required.',
+
+                'medical_conditions.max' => 'Medical conditions should not exceed :max characters.',
+                'allergy.max' => 'Allergies should not exceed :max characters.',
+
+                'username.required' => 'Username is required.',
+                'username.unique' => 'Username is already taken.',
+                'username.alpha_dash' => 'Username should only contain letters, numbers, and underscores.',
+                'username.min' => 'Username must be at least 5 characters long.',
+                'username.max' => 'Username may not be greater than 20 characters.',
+
+                'password.required' => 'Password is required.',
+                'password.string' => 'Password must be a string.',
+                'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and must be at least 8 characters long.',
+                'password.min' => 'Password must be at least 8 characters long.',
+                'password.max' => 'Password may not be greater than 20 characters.',
+
+                'verify_password.required' => 'Please confirm your password.',
+                'verify_password.same' => 'Passwords do not match.',
+
+                'agree_data_collection.accepted' => 'You must agree to data collection.',
+                'agree_user_policy.accepted' => 'You must agree to the user policy.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         // Create user
         $user = User::create([
@@ -80,6 +177,7 @@ class AuthController extends Controller
             'last_name' => $request->last_name,
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
+            'suffix' => $request->suffix,
             'date_of_birth' => $request->date_of_birth,
             'gender' => $request->gender,
             'marital_status' => $request->marital_status,
@@ -136,10 +234,23 @@ class AuthController extends Controller
     // Handle login action
     public function loginAction(Request $request)
     {
-        Validator::make($request->all(), [
-            'username' => 'required',
-            'password' => 'required'
-        ])->validate();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'username' => 'required',
+                'password' => 'required',
+            ],
+            [
+                'username.required' => 'Username is required.',
+                'password.required' => 'Password is required.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('login')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         if (!Auth::attempt($request->only('username', 'password'), $request->boolean('remember'))) {
             throw ValidationException::withMessages([
@@ -205,7 +316,9 @@ class AuthController extends Controller
         // }
 
         // return redirect()->route('home');
+
     
+
 
     // Logout
     public function logout(Request $request)

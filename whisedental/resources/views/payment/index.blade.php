@@ -18,7 +18,7 @@
         <a href="#">Appointments</a>
         <a href="#">Patient's Record</a>
         <a href="#">Reports</a>
-        <a href="#">Maintenance</a>
+        <a href="{{ route('payments/home') }}">Payments</a>
         <a href="{{ route('admin/inventory') }}">Inventory</a>
         <a href="#">Help</a>
         <a href="#">About</a>
@@ -46,14 +46,10 @@
             <tbody>
                 @forelse($payments as $payment)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $payment->payment_id }}</td>
                         <td>{{ $payment->patient->last_name }}</td>
-                        <td>
-                            @if ($payment->patient->appointments)
-                                {{ $payment->patient->appointments->type_of_appointment }}
-                            @else
-                                No Appointment
-                            @endif
+                        <td> 
+                        {{ $payment->type_of_appointment }}     
                         </td>
                         <td>{{ $payment->payment_method}}</td>
                         <td>{{ $payment->balance }}</td>

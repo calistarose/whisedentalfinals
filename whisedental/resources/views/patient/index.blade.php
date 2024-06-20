@@ -14,10 +14,10 @@
     {{-- SIDE NAVIGATION BAR --}}
     <div id="sidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="{{ route ('admin/home') }}">Dashboard</a>
-        <a href="{{ route ('appointments.index')}}">Appointments</a>
-        <a href={{ route ('patient') }}>Patient's Record</a>
-        <a href="{{ route ('income/home')}}">Reports</a>
+        <a href="{{ route ('admin/home')}}">Dashboard</a>
+        <a href="#">Appointments</a>
+        <a href="#">Patient's Record</a>
+        <a href="#">Reports</a>
         <a href="{{ route ('payments/home')}}">Payments</a>
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
@@ -25,66 +25,60 @@
         <a href="{{ route ('logout') }}">Logout</a>
     </div>
 
-    {{-- LABEL --}}
-    <div class="marker">DASHBOARD</div>
+     {{-- LABEL --}}
+     <div class="marker">DASHBOARD</div>
 
     {{-- ADMIN --}}
     <div class="text">ADMIN</div>
     <a href="{{route('admin/profile')}}">
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
+    {{-- SEARCH --}}
+    <form action="{{ route('search') }}" method="GET">
+            <div class="mb-3">
+                <input type="text" name="query" class="form-control" placeholder="Search by ID, name, etc.">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+     
 
-    {{-- FIRST ROW OF BUTTONS --}}
-    <div class="">
-        {{-- NUMBER OF APPOINTMENTS --}}
-        <div class="box">
-            <div class="text">
-                <p class="">Scheduled for today</p>
-                <p class="">{{ $appointmentsCount }} </p>
-                <p class="">Patients</p>
-            </div>
-        </div>
-        {{-- APPOINTMENTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Appointments</p>
-                <p class="">Calendar | Schedule Visit</p>
-            </div>
-        </div>
-        {{-- PATIENT'S RECORDS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Patient's Records</p>
-                <p class="">Personal Information | Dental Treatment History</p>
-            </div>
-        </div>
-    </div>
-
-    {{-- SECOND ROW OF BUTTONS --}}
-    <div class="">
-        {{-- REPORTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Reports</p>
-                <p class="">Generate Transaction Record</p>
-            </div>
-        </div>
-        {{-- MAINTENANCE --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Maintenance</p>
-                <p class="">Add | Modify / Edit Information</p>
-            </div>
-        </div>
-        {{-- INVENTORY --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Inventory</p>
-                <p class="">Dental Materials Stock</p>
-            </div>
-        </div>
-    </div>
-    
+    <!-- INVENTORY TABLE -->
+    <button class="create-button" onclick="location.href='{{ route('patient/add') }}'">Add Patient</button>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Patient No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">More Details</th>
+                <th scope="col">Action</th>
+                <!-- <th scope="col">Edit</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            @if($patient->count()>0)
+            @foreach($patient as $ps)
+            <tr>
+                <td>
+                    {{$ps->patient_id}}
+                </td>
+                <td>
+                    {{$ps->last_name.', '.$ps->first_name.' '.$ps->middle_name}}
+                </td>
+                <td>
+                <a href="{{ route('patient/show', $ps->id)}}" class="text-green-800 pl-2">More Details</a>
+                </td>
+                <td>
+                <a href="{{ route('patient/edit', $ps->id)}}" class="text-green-800 pl-2">Edit</a>
+                </td>
+            </tr>
+            @endforeach
+            @else
+            <tr>
+                <td>product not found</td>
+            </tr>
+            @endif
+        </tbody>
+    </table>
 
     {{-- SCRIPTS --}}
     <script>

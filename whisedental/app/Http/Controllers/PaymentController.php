@@ -13,22 +13,34 @@ class PaymentController extends Controller
 {
     public function index()
     {
+        // Fetch payments with patient and appointment information
+        $payments = Payment::with(['patient', 'patient.appointment'])->get();
+
+        return view('payment.index', compact('payments'));
+    }
+    public function create()
+    {
         // Fetch all patients
         $patients = Patient::all();
 
-        // Fetch payments with patient information
-        $payments = Payment::with('patient')->get();
+        // Initialize an array to store latest appointment types
+        $latestAppointmentTypes = [];
 
-        // Fetch appointments with patient information
-        $appointments = Appointment::with('patient')->get();
+        // Loop through each patient to fetch their latest appointment type
+        foreach ($patients as $patient) {
+            // Fetch the latest appointment type for the current patient
+            $latestAppointmentType = Appointment::where('patient_id', $patient->id)
+                                                ->latest()
+                                                ->value('type_of_appointment');
 
-        return view('payment.index', compact('patients', 'payments', 'appointments'));
-    }
+            // Store the latest appointment type in the array
+            $latestAppointmentTypes[$patient->id] = $latestAppointmentType;
+        }
 
-    public function create()
-    {
-        $patients = Patient::all();
-        return view('payment.create', compact('patients'));
+        return view('payment.create', [
+            'patients' => $patients,
+            'latestAppointmentTypes' => $latestAppointmentTypes,
+        ]);
     }
 
     public function store(Request $request)
@@ -36,10 +48,10 @@ class PaymentController extends Controller
         // Validate request data
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
-            'appointment_type' => 'required|string',
             'payment_method' => 'required|string',
             'debit' => 'required|numeric',
             'credit' => 'required|numeric',
+            'type_of_appointment'=>'required'
         ]);
 
         // Calculate balance
@@ -50,8 +62,8 @@ class PaymentController extends Controller
         // Create new payment record
         $payment = Payment::create([
             'patient_id' => $request->input('patient_id'),
-            'appointment_type' => $request->input('appointment_type'),
             'payment_method' => $request->input('payment_method'),
+            'type_of_appointment'=>$request->input('type_of_appointment'),
             'debit' => $debit,
             'credit' => $credit,
             'balance' => $balance,
@@ -59,13 +71,13 @@ class PaymentController extends Controller
 
         // Send payment receipt email
         try {
-            Mail::to($payment->patient->email)->send(new ReceiptEmail($payment));
+            Mail::to($payment->patient->email_address)->send(new ReceiptEmail($payment));
         } catch (\Exception $e) {
             \Log::error('Failed to send receipt email: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to send receipt email.');
         }
 
         // Redirect back with success message
-        return redirect()->route('payments/index')->with('success', 'Payment created successfully.');
+        return redirect()->route('payments/home')->with('success', 'Payment created successfully.');
     }
 }

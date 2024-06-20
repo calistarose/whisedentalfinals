@@ -14,7 +14,8 @@ class Appointment extends Model
         'type_of_appointment', 
         'start_datetime', 
         'end_datetime', 
-        'patient_id'];
+        'patient_id',
+    ];
     protected static function boot()
     {
         parent::boot();
@@ -32,6 +33,6 @@ class Appointment extends Model
     }
     public function patient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 }

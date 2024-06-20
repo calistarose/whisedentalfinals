@@ -43,36 +43,54 @@
             </label>
             <input id="product_name" name="product_name" type="text">
         </div>
+        @error('product_name')
+            <span class="error">{{ $message }}</span>
+        @enderror
         <div>
             <label>
                 Brand
             </label>
             <input id="brand" name="brand" type="text">
         </div>
+        @error('brand')
+            <span class="error">{{ $message }}</span>
+        @enderror
         <div>
             <label>
                 Supplier
             </label>
             <input id="supplier" name="supplier" type="text">
         </div>
+        @error('supplier')
+            <span class="error">{{ $message }}</span>
+        @enderror
         <div>
             <label>
                 Quantity
             </label>
             <input id="quantity" name="quantity" type="number">
         </div>
+        @error('quantity')
+            <span class="error">{{ $message }}</span>
+        @enderror
         <div>
             <label>
                 Expiry Date
             </label>
             <input id="date_expired" name="date_expired" type="date">
         </div>
+        @error('date_expired')
+            <span class="error">{{ $message }}</span>
+        @enderror
         <div>
             <label>
                 Date Restocked
             </label>
             <input id="date_restocked" name="date_restocked" type="date">
         </div>
+        @error('date_restocked')
+            <span class="error">{{ $message }}</span>
+        @enderror
         <button type="submit">Add Inventory Item</button>
      </form>
    

@@ -17,7 +17,7 @@
         <a href="{{ route ('admin/home') }}">Dashboard</a>
         <a href="{{ route ('appointments.index')}}">Appointments</a>
         <a href={{ route ('patient') }}>Patient's Record</a>
-        <a href="{{ route ('income/home')}}">Reports</a>
+        <a href=" {{ route('income/home')}}">Reports</a>
         <a href="{{ route ('payments/home')}}">Payments</a>
         <a href="{{ route ('admin/inventory')}}">Inventory</a>
         <a href="#">Help</a>
@@ -33,54 +33,28 @@
     <a href="{{route('admin/profile')}}">
     <div class="image"><img src="{{ asset('images/user.png')}}" alt="whise-logo" class="logo"> </div>
     </a>
-
-    {{-- FIRST ROW OF BUTTONS --}}
-    <div class="">
-        {{-- NUMBER OF APPOINTMENTS --}}
-        <div class="box">
-            <div class="text">
-                <p class="">Scheduled for today</p>
-                <p class="">{{ $appointmentsCount }} </p>
-                <p class="">Patients</p>
-            </div>
-        </div>
-        {{-- APPOINTMENTS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Appointments</p>
-                <p class="">Calendar | Schedule Visit</p>
-            </div>
-        </div>
-        {{-- PATIENT'S RECORDS --}}
-        <div class="filled-box">
-            <div class="text">
-                <p class="">Patient's Records</p>
-                <p class="">Personal Information | Dental Treatment History</p>
-            </div>
-        </div>
-    </div>
-
     {{-- SECOND ROW OF BUTTONS --}}
     <div class="">
         {{-- REPORTS --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Reports</p>
-                <p class="">Generate Transaction Record</p>
+                <a href = '{{ route('get/income')}}'>
+                <p class="">Income</p>
+                </a>
             </div>
         </div>
-        {{-- MAINTENANCE --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Maintenance</p>
-                <p class="">Add | Modify / Edit Information</p>
+            <a href = ''>
+                <p class="">Patient</p>
+                </a>
             </div>
         </div>
-        {{-- INVENTORY --}}
         <div class="filled-box">
             <div class="text">
-                <p class="">Inventory</p>
-                <p class="">Dental Materials Stock</p>
+            <a href = ''>
+                <p class="">Payments</p>
+                </a>
             </div>
         </div>
     </div>

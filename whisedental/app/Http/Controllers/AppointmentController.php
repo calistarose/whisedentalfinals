@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -109,4 +108,23 @@ class AppointmentController extends Controller
             return response()->json(['success' => false, 'message' => 'This appointment cannot be cancelled as its end time has already passed.']);
         }
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $appointment = Appointment::find($id);
+        if (!$appointment) {
+            return response()->json(['success' => false, 'message' => 'Appointment not found.'], 404);
+        }
+
+        try {
+            $appointment->status = $request->status;
+            $appointment->save();
+
+            return response()->json(['success' => true, 'message' => 'Appointment status updated successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An error occurred while updating the appointment status.'], 500);
+        }
+    }
+    
+    
 }

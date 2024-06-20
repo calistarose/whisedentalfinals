@@ -11,7 +11,7 @@
     <div class="form-container">
         <form method="post" action="{{ route('login.action') }}">
             @csrf
-            @if ($errors->any())
+            <!-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <strong class="'font-bold">Error!</strong>
                     <ul>
@@ -20,16 +20,22 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif -->
             {{-- LOGIN PAGE --}}
             <div class="form-section active" >
                 <div class="marker">LOGIN</div>
                 {{-- USERNAME --}}
                 <div class=""> <label for="username">Username</label> </div>
-                <div class=""> <input type="text" placeholder="jcdelacruz" name="username"> </div>
+                <div class=""> <input type="text" placeholder="jcdelacruz" name="username" value="{{ old('username') }}"> </div>
+                @error('username')
+                        <span class="error">{{ $message }}</span>
+                @enderror
                 {{-- PASSWORD --}}
                 <div class=""> <label for="password">Password</label> </div>
-                <div class=""> <input type="text" placeholder="hello123" name="password"> </div>
+                <div class=""> <input type="text" placeholder="hello123" name="password" > </div>
+                @error('password')
+                        <span class="error">{{ $message }}</span>
+                @enderror
                 <div class=""> <label for="forgot_password">Forgot Password?</label> </div>
                 <div class=""> <button type="submit" class="">LOG IN</button> </div>
                 <!-- REMEMBER ME -->

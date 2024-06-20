@@ -10,13 +10,13 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'total_amount',
         'debit',
         'credit',
         'balance',
         'patient_id',
         'appointment_id',
-        'payment_method'
+        'payment_method',
+        'type_of_appointment',
     ];
 
     protected static function boot()
@@ -28,7 +28,7 @@ class Payment extends Model
             $lastpayment = static::orderBy('created_at', 'desc')->first();
 
             if ($lastpayment) {
-                $model->payment_id = 'R' . str_pad((int) substr($lastpayment->payment_id, 1) + 1, 9, '0', STR_PAD_LEFT);
+                $model->payment_id = 'R' . str_pad((int) substr($lastpayment->payment_id, 1) + 1, 5, '0', STR_PAD_LEFT);
             } else {
                 $model->payment_id = 'R00001'; // Initial payment_id if table is empty
             }
